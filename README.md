@@ -69,7 +69,7 @@ ros2 launch AMR-simulation-and-navigation amr_tes1.launch.py
 ## Features and roadmap
 
 Future updates and debugging:
- - Gazebo fortress world launch [x]
+ - Gazebo fortress world launch - [x]
  - Spawn robot [x]
  - Teleop [x]
  - Nav2 (In process)
