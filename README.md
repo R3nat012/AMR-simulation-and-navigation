@@ -1,7 +1,7 @@
 # AMR-simulation-and-navigation
 
 Simulation of an AMR in different gz worlds using ros2 and nav2.
-![First simulation](images/Exmpl1.png)
+![First simulation](images/Exmpl1.png){width=200 height=200}
 
 ## Project overview
 
@@ -69,9 +69,9 @@ ros2 launch AMR-simulation-and-navigation amr_tes1.launch.py
 ## Features and roadmap
 
 Future updates and debugging:
- - Gazebo fortress world launch (done)
- - Spawn robot (done)
- - Teleop (done)
+ - Gazebo fortress world launch [x]
+ - Spawn robot [x]
+ - Teleop [x]
  - Nav2 (In process)
  - SLAM (In process)
 
