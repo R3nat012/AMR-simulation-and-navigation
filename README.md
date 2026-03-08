@@ -2,7 +2,7 @@
 
 Simulation of an AMR in different gz worlds using ros2 and nav2.
 
-<img src="images/Exmpl1.png" alt="First simulation" width="300" height="300">
+<img src="images/Exmpl1.png" alt="First simulation" width="400" height="400">
 
 ## Project overview
 
