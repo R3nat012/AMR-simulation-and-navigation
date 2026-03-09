@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<robot name="turtlebot3_waffle_pi_gz" xmlns:xacro="http://ros.org/wiki/xacro">
+   <xacro:include filename="$(find turtlebot3_gazebo)/urdf/turtlebot3_waffle_pi.urdf" />
+
+   <!-- Differential plugin -->
+   <gazebo>
+    <plugin filename="ignition-gazebo-diff-drive-system" name="ignition::gazebo::systems::DiffDrive">
+      <left_joint>wheel_left_joint</left_joint>
+      <right_joint>wheel_right_joint</right_joint>
+      <wheel_separation>0.287</wheel_separation>
+      <wheel_radius>0.033</wheel_radius>
+      <odom_publish_frequency>30</odom_publish_frequency>
+      <topic>cmd_vel</topic>
+      <odom_topic>odom</odom_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_footprint</child_frame_id>
+    </plugin>
+  </gazebo>
+
+</robot>

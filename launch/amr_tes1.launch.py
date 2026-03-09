@@ -10,15 +10,15 @@ from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
-
 from launch_ros.actions import Node
 from launch.actions import SetEnvironmentVariable
+import xacro
 
 def generate_launch_description():
 
     # Project paths
     world_pkg = get_package_share_directory('neo_gz_worlds')
-    robot_description_pkg = get_package_share_directory('turtlebot3_gazebo')
+    xacro_file = os.path.join(get_package_share_directory('amr_sim'), 'urdf', 'turtlebot3_gz_fortress.urdf')
 
     set_resource_path = SetEnvironmentVariable(
         'IGN_GAZEBO_RESOURCE_PATH',
@@ -26,10 +26,7 @@ def generate_launch_description():
     )
 
     # Load URDF of the robot
-    urdf_file = os.path.join(robot_description_pkg, 'urdf', 'turtlebot3_waffle_pi.urdf')
-    with open(urdf_file, 'r') as infp:
-        robot_description = infp.read()
-
+    robot_description = xacro.process_file(xacro_file).toxml()
     turtlebot3_gazebo_pkg = get_package_share_directory('turtlebot3_gazebo')
 
     set_resource_path = SetEnvironmentVariable(
@@ -54,7 +51,7 @@ def generate_launch_description():
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         name='joint_state_publisher_gui',
-        arguments=[urdf_file],
+        arguments=[xacro_file],
         output=['screen']
     )
 
@@ -84,10 +81,22 @@ def generate_launch_description():
         output='screen'
     )
 
+    # Bridge between gz topics and ros2
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        arguments=[
+            '/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist',
+            '/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
+        ],
+        output='screen'
+    )
+
     return LaunchDescription([
         set_resource_path,
         gz_sim,
         joint_state_publisher_gui,
         robot_state_publisher,
-        spawn_entity
+        spawn_entity,
+        bridge
     ])
