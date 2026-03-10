@@ -92,7 +92,14 @@ def generate_launch_description():
         output='screen'
     )
 
+    # Load the sensor plugins
+    set_server_config = SetEnvironmentVariable(
+        'IGN_GAZEBO_SERVER_CONFIG',
+        os.path.join(get_package_share_directory('amr_sim'), 'config', 'server.config')
+    )
+
     return LaunchDescription([
+        set_server_config,
         set_resource_path,
         gz_sim,
         joint_state_publisher_gui,
