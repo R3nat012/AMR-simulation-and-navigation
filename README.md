@@ -41,7 +41,7 @@ colcon build
 source install/setup.bash
 ```
 
-4. (Work in progress) To use cartographer, we need to go to our world .sdf and paste the following lines inside the <world> definition
+4. (Work in progress) To use cartographer, we need to go to our world .sdf and paste the following lines inside the world definition
 
 ```xml
 <plugin filename="libignition-gazebo-imu-system.so" name="ignition::gazebo::systems::Imu"/>
