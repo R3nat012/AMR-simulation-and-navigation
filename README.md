@@ -54,6 +54,17 @@ Bringup the robot and the first world in gz
 ros2 launch AMR-simulation-and-navigation amr_tes1.launch.py
 ```
 
+To map our environment we have to use cartographer
+
+```bash
+ros2 launch AMR-simulation-and-navigation mapping.launch.py
+```
+
+In another terminal run rviz2
+```bash
+rviz2
+```
+
 ## Project structure
 
 ```text
@@ -79,8 +90,8 @@ Future updates and debugging:
  - Gazebo fortress world launch  [&#x2714;]
  - Spawn robot [&#x2714;]
  - Teleop [&#x2714;]
+ - SLAM [&#x2714;]
  - Nav2 (In process)
- - SLAM (In process)
 
 ## References
 

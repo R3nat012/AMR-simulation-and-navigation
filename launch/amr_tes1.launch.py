@@ -86,31 +86,34 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
+            '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
             '/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist',
             '/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
             '/world/default/model/turtlebot3/link/base_footprint/sensor/lidar/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan',
             '/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image@sensor_msgs/msg/Image[ignition.msgs.Image',
-            '/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU'
+            '/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU',
+            '/model/turtlebot3/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V'
         ],
         remappings=[
             ('/world/default/model/turtlebot3/link/base_footprint/sensor/lidar/scan', '/scan'),
-            ('/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image', '/camera/image')
+            ('/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image', '/camera/image'),
+            ('/model/turtlebot3/tf', '/tf')
         ],
         output='screen'
     )
 
-    # Load the sensor plugins
-    set_server_config = SetEnvironmentVariable(
-        'IGN_GAZEBO_SERVER_CONFIG',
-        os.path.join(get_package_share_directory('amr_sim'), 'config', 'server.config')
+    static_tf = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0', '0', '0', '0', '0', '0', 'base_scan', 'turtlebot3/base_footprint/lidar'],
     )
 
     return LaunchDescription([
-        set_server_config,
         set_resource_path,
         gz_sim,
         joint_state_publisher_gui,
         robot_state_publisher,
         spawn_entity,
-        bridge
+        bridge,
+        static_tf
     ])
