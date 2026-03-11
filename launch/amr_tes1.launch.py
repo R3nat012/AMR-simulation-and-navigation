@@ -90,12 +90,11 @@ def generate_launch_description():
             '/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
             '/world/default/model/turtlebot3/link/base_footprint/sensor/lidar/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan',
             '/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image@sensor_msgs/msg/Image[ignition.msgs.Image',
-            '/world/default/pose/info@sensor_msgs/msg/Imu[ignition.msgs.IMU'
+            '/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU'
         ],
         remappings=[
             ('/world/default/model/turtlebot3/link/base_footprint/sensor/lidar/scan', '/scan'),
-            ('/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image', '/camera/image'),
-            ('/world/default/pose/info', '/imu')
+            ('/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image', '/camera/image')
         ],
         output='screen'
     )
