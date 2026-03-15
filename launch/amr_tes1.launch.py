@@ -95,8 +95,10 @@ def generate_launch_description():
             '/world/default/model/turtlebot3/link/base_footprint/sensor/lidar/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan',
             '/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image@sensor_msgs/msg/Image[ignition.msgs.Image',
             '/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU',
+            '/cmd_vel_nav@geometry_msgs/msg/Twist]ignition.msgs.Twist',
         ],
         remappings=[
+            ('/cmd_vel_nav', '/cmd_vel'),
             ('/world/default/model/turtlebot3/link/base_footprint/sensor/lidar/scan', '/scan'),
             ('/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image', '/camera/image')
         ],
@@ -113,7 +115,8 @@ def generate_launch_description():
     static_tf_lidar = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
-        arguments=['0', '0', '0', '0', '0', '0', 'base_scan', 'turtlebot3/base_footprint/lidar'],
+        arguments=['--x', '0', '--y', '0', '--z', '0', '--roll', '0', '--pitch', '0', '--yaw', '0',
+                '--frame-id', 'base_scan', '--child-frame-id', 'turtlebot3/base_footprint/lidar'],
         parameters=[{'use_sim_time': True}],
     )
 
@@ -125,4 +128,5 @@ def generate_launch_description():
         spawn_entity,
         static_tf_lidar,
         bridge,
+        odom_tf, # Comment this line for mapping
     ])

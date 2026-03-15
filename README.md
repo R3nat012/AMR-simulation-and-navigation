@@ -64,6 +64,15 @@ In another terminal run rviz2
 ```bash
 rviz2
 ```
+To navigate with existing map we need to launch just the following file
+```bash
+ros2 launch AMR-simulation-and-navigation amr_navigation.launch.py
+```
+In another terminal run rviz2
+```bash
+rviz2 -d $(ros2 pkg prefix nav2_bringup)/share/nav2_bringup/rviz/nav2_default_view.rviz --ros-args -p use_sim_time:=true
+```
+
 
 ## Project structure
 
@@ -100,7 +109,7 @@ Future updates and debugging:
  - Spawn robot [&#x2714;]
  - Teleop [&#x2714;]
  - SLAM [&#x2714;]
- - Nav2 (In process)
+ - Nav2 [&#x2714;]
 
 ## References
 
