@@ -17,6 +17,7 @@ def generate_launch_description():
             package='cartographer_ros',
             output='screen',
             executable='cartographer_occupancy_grid_node',
+            parameters=[{'use_sim_time': True}],
             name='cr_oc_node'
         ),
 

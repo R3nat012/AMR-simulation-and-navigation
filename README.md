@@ -69,19 +69,28 @@ rviz2
 
 ```text
 .
-└── AMR-simulation-and-navigation
-    ├── CMakeLists.txt
-    ├── images
-    │   ├── architecture.png
-    │   └── Exmpl1.png
-    ├── include
-    │   └── amr_sim
-    ├── launch
-    │   ├── amr_tes1.launch.py
-    │   └── bringup.launch.py
-    ├── package.xml
-    ├── README.md
-    └── src
+├── CMakeLists.txt
+├── config
+│   ├── my_map.pgm
+│   ├── my_map.yaml
+│   ├── nav2_params_amr.yaml
+│   ├── server.config
+│   └── tb3_cartographer.lua
+├── images
+│   ├── architecture.png
+│   └── Exmpl1.png
+├── include
+│   └── amr_sim
+├── launch
+│   ├── amr_tes1.launch.py
+│   ├── bringup.launch.py
+│   └── mapping.launch.py
+├── package.xml
+├── README.md
+├── src
+└── urdf
+    └── turtlebot3_gz_fortress.urdf
+
 ```
 
 ## Features and roadmap

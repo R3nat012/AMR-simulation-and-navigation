@@ -52,6 +52,7 @@ def generate_launch_description():
         executable='joint_state_publisher_gui',
         name='joint_state_publisher_gui',
         arguments=[xacro_file],
+        parameters=[{'use_sim_time': True}],
         output=['screen']
     )
 
@@ -62,7 +63,7 @@ def generate_launch_description():
         name='robot_state_publisher',
         output='both',
         parameters=[
-            {'use_sim_time: True'},
+            {'use_sim_time': True},
             {'robot_description': robot_description},
         ]
     )
@@ -78,6 +79,7 @@ def generate_launch_description():
             '-z', '1.0',
             '-Y', '1.57',  # yaw rotation in radians
         ],
+        parameters=[{'use_sim_time': True}],
         output='screen'
     )
 
@@ -85,6 +87,7 @@ def generate_launch_description():
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
+        parameters=[{'use_sim_time': True}],
         arguments=[
             '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
             '/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist',
@@ -92,20 +95,26 @@ def generate_launch_description():
             '/world/default/model/turtlebot3/link/base_footprint/sensor/lidar/scan@sensor_msgs/msg/LaserScan[ignition.msgs.LaserScan',
             '/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image@sensor_msgs/msg/Image[ignition.msgs.Image',
             '/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU',
-            '/model/turtlebot3/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V'
         ],
         remappings=[
             ('/world/default/model/turtlebot3/link/base_footprint/sensor/lidar/scan', '/scan'),
-            ('/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image', '/camera/image'),
-            ('/model/turtlebot3/tf', '/tf')
+            ('/world/default/model/turtlebot3/link/base_footprint/sensor/camera/image', '/camera/image')
         ],
         output='screen'
     )
 
-    static_tf = Node(
+    odom_tf = Node(
+        package='amr_sim',
+        executable='odom_tf_publisher.py',
+        parameters=[{'use_sim_time': True}],
+        output='screen'
+    )
+
+    static_tf_lidar = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
         arguments=['0', '0', '0', '0', '0', '0', 'base_scan', 'turtlebot3/base_footprint/lidar'],
+        parameters=[{'use_sim_time': True}],
     )
 
     return LaunchDescription([
@@ -114,6 +123,6 @@ def generate_launch_description():
         joint_state_publisher_gui,
         robot_state_publisher,
         spawn_entity,
+        static_tf_lidar,
         bridge,
-        static_tf
     ])
